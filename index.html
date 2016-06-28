@@ -1,10 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Javascript Color Guessing Game</title>
+	<title>JavaScript Color Guessing Game</title>
 </head>
-	<body onload="startPlaying()">
-	<script type="text/javascript" src="colorGame.js">
+	<body onload="doGame()">
+	<script type="text/javascript">
+		var target;
+var guess_input;
+var gameOver = false;
+var guessNumber = 0;
+var colors = ["aqua", "black", "blue", "fuchsia", "gray", "grey", "green", "lime", "maroon", "navy", "olive", "purple", "red", "silver", "teal", "white", "yellow"];
+
+function doGame() {
+	// Choose random number between 0 and 17 (standard CSS color names).
+	var target_index = Math.round(Math.random() * 17);
+	target = colors[target_index];
+
+	//Sets the color of the h1 title to help in guessing
+	document.getElementById("boja").style.color = target;
+
+	while (!gameOver) {
+		// Enter guess color and lowercase it.
+		guess_input = prompt("I am thinking of one of these colors:\n\naqua, black, blue, fuchsia, gray, grey, green, lime, maroon, navy, olive, purple, red, silver, teal, white, yellow\n\nWhat color am I thinking of?").toLowerCase();
+		// Add to the numbers of guesses.
+		guessNumber++
+		gameOver = checkGuess();
+	}
+}
+
+function checkGuess() {
+	// Some other word
+	if (colors.indexOf(guess_input) === -1) {
+		alert("Sorry, I don't recognize your color.\n\nPlease try again.");
+		return false;
+	}
+	// Guess color "too large".
+	else if ((guess_input) > target) {
+		alert("Sorry, your guess is not correct!\n\nHint: your color is alphabetically higher than mine.\n\nPlease try again.");
+			return false;
+	}
+	// Guess color "too low".
+	else if ((guess_input) < target) {
+		alert("Sorry, your guess is not correct!\n\nHint: your color is alphabetically lower than mine.\n\nPlease try again.");
+		return false;
+	}
+	// Correct guess!!!
+	else if (guess_input == target) {
+		//change background color to the guessed one
+		document.body.style.backgroundColor = target;
+		alert("Congratulations! You have guessed the color!\n\nIt took you " + guessNumber + " guesses to finish the game!\n\nYou can see the colour in the background.");
+		return true;
+	}
+}
 	</script>
+	<h1 id="boja">JavaScript Color Guessing Game</h1>
 	</body>
 </html>
